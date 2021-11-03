@@ -65,8 +65,22 @@ class InfoInlineAdmin(admin.StackedInline):
         css = {"all": ("admin/flume_django/info/topology.css",)}
 
 
-class FieldAdmin(admin.ModelAdmin):
-    list_display = ("id", "name", "value")
+class FieldInlineAdmin(admin.TabularInline):
+    model = Field
+    extra = 0
+
+    def has_change_permission(self, request, obj=None):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+
+class StreamAdmin(admin.ModelAdmin):
+    list_display = ("id", "type", "media_type")
+    inlines = [
+        FieldInlineAdmin,
+    ]
 
     def has_change_permission(self, request, obj=None):
         return False
@@ -76,7 +90,7 @@ class FieldAdmin(admin.ModelAdmin):
 
 
 class FileAdmin(admin.ModelAdmin):
-    list_display = ("name",)
+    list_display = ("id", "name")
     inlines = [
         InfoInlineAdmin,
     ]
@@ -127,10 +141,8 @@ class FileAdmin(admin.ModelAdmin):
 
 
 admin.site.register(File, FileAdmin)
-admin.site.register(Info)
-admin.site.register(Stream)
+admin.site.register(Stream, StreamAdmin)
 admin.site.register(Video)
 admin.site.register(Audio)
 admin.site.register(Subtitle)
 admin.site.register(Container)
-admin.site.register(Field, FieldAdmin)
