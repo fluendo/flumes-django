@@ -6,7 +6,16 @@
 * Possiblity to upload files directly through the admin interface
 
 ## Setup
-In order to integrate `flume-django` into your `Django` application, you need to
+In order to integrate `flume-django` into your `Django` application, you need to:
+
+Add `flume-django` as an installed application in your `settings.py`
+```python
+INSTALLED_APPS = (
+    ...,
+    "flume_django",
+)
+```
+
 Add the `flume` database to your `settings.py`, you can do it manually or use the `flume_django.config.FlumeDjangoConfig` helper
 
 ```python
