@@ -55,14 +55,14 @@ class InfoInlineAdmin(admin.StackedInline):
     def streams(self, obj):
         children = Stream.objects.filter(info=obj, parent=None)
         content = render_to_string(
-            "admin/flume_django/info/topology.html", {"children": children}
+            "admin/flume_django/info/streams.html", {"children": children}
         )
         return content
 
     streams.allow_tags = True
 
     class Media:
-        css = {"all": ("admin/flume_django/info/topology.css",)}
+        css = {"all": ("admin/flume_django/common/topology.css",)}
 
 
 class FieldInlineAdmin(admin.TabularInline):
@@ -81,12 +81,42 @@ class StreamAdmin(admin.ModelAdmin):
     inlines = [
         FieldInlineAdmin,
     ]
+    fieldsets = (
+        (
+            None,
+            {
+                "fields": (
+                    "parent",
+                    "media_type",
+                    "type",
+                ),
+            },
+        ),
+        (
+            "Topology",
+            {
+                "fields": ("children",),
+            },
+        ),
+    )
+    readonly_fields = ("children",)
 
     def has_change_permission(self, request, obj=None):
         return False
 
     def has_delete_permission(self, request, obj=None):
         return False
+
+    def children(self, obj):
+        content = render_to_string(
+            "admin/flume_django/stream/children.html", {"root": obj}
+        )
+        return content
+
+    children.allow_tags = True
+
+    class Media:
+        css = {"all": ("admin/flume_django/common/topology.css",)}
 
 
 class FileAdmin(admin.ModelAdmin):
