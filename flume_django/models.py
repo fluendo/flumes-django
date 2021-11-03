@@ -38,6 +38,9 @@ class Stream(models.Model):
 
     id = models.AutoField(primary_key=True)
     info = models.ForeignKey(Info, on_delete=models.CASCADE)
+    parent = models.ForeignKey(
+        "self", related_name="children", on_delete=models.CASCADE
+    )
     media_type = models.CharField(max_length=128)
     type = models.CharField(max_length=32, choices=StreamType.choices)
     # Common fields for a single table inheritance

@@ -2,6 +2,7 @@ import os
 
 from django.contrib import admin
 from django.http import HttpResponseRedirect
+from django.template.loader import render_to_string
 from django.template.response import TemplateResponse
 from django.urls import path, reverse
 
@@ -22,12 +23,46 @@ from flume_django.models import (
 class InfoInlineAdmin(admin.StackedInline):
     model = Info
     extra = 0
+    fieldsets = (
+        (
+            None,
+            {
+                "fields": (
+                    "duration",
+                    "seekable",
+                    "live",
+                    "audio_streams",
+                    "video_streams",
+                    "subtitle_streams",
+                ),
+            },
+        ),
+        (
+            "Topology",
+            {
+                "fields": ("streams",),
+            },
+        ),
+    )
+    readonly_fields = ("streams",)
 
     def has_change_permission(self, request, obj=None):
         return False
 
     def has_delete_permission(self, request, obj=None):
         return False
+
+    def streams(self, obj):
+        children = Stream.objects.filter(info=obj, parent=None)
+        content = render_to_string(
+            "admin/flume_django/info/topology.html", {"children": children}
+        )
+        return content
+
+    streams.allow_tags = True
+
+    class Media:
+        css = {"all": ("admin/flume_django/info/topology.css",)}
 
 
 class FieldAdmin(admin.ModelAdmin):
