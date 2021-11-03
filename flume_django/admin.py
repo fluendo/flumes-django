@@ -77,29 +77,37 @@ class FieldInlineAdmin(admin.TabularInline):
 
 
 class StreamAdmin(admin.ModelAdmin):
-    list_display = ("id", "type", "media_type")
     inlines = [
         FieldInlineAdmin,
     ]
-    fieldsets = (
-        (
-            None,
-            {
-                "fields": (
-                    "parent",
-                    "media_type",
-                    "type",
-                ),
-            },
-        ),
-        (
-            "Topology",
-            {
-                "fields": ("children",),
-            },
-        ),
-    )
-    readonly_fields = ("children",)
+
+    def get_list_display(self, request):
+        return (
+            "id",
+            "type",
+            "media_type",
+        )
+
+    def get_readonly_fields(self, request, obj=None):
+        return ("children",)
+
+    def get_fieldsets(self, request, obj=None):
+        # Same fields as list without it
+        fields = list(self.get_list_display(request))
+        fields.remove("id")
+        fields = tuple(fields)
+        return (
+            (
+                None,
+                {"fields": fields},
+            ),
+            (
+                "Topology",
+                {
+                    "fields": ("children",),
+                },
+            ),
+        )
 
     def has_change_permission(self, request, obj=None):
         return False
@@ -117,6 +125,60 @@ class StreamAdmin(admin.ModelAdmin):
 
     class Media:
         css = {"all": ("admin/flume_django/common/topology.css",)}
+
+
+class ContainerAdmin(StreamAdmin):
+    pass
+
+
+class VideoAdmin(StreamAdmin):
+    def get_readonly_fields(self, request, obj=None):
+        readonly_fields = super().get_readonly_fields(request, obj)
+        readonly_fields += ("framerate", "par")
+        return readonly_fields
+
+    def get_list_display(self, request):
+        list_display = super().get_list_display(request)
+        list_display += (
+            "bitrate",
+            "max_bitrate",
+            "depth",
+            "framerate",
+            "width",
+            "height",
+            "par",
+            "is_image",
+            "is_interlaced",
+        )
+        return list_display
+
+    def par(self, obj):
+        return "{}/{}".format(obj.par_num, obj.par_denom)
+
+    def framerate(self, obj):
+        return "{}/{}".format(obj.framerate_num, obj.framerate_denom)
+
+
+class AudioAdmin(StreamAdmin):
+    def get_list_display(self, request):
+        list_display = super().get_list_display(request)
+        list_display += (
+            "bitrate",
+            "max_bitrate",
+            "depth",
+            "language",
+            "channel_mask",
+            "channels",
+            "sample_rate",
+        )
+        return list_display
+
+
+class SubtitleAdmin(StreamAdmin):
+    def get_list_display(self, request):
+        list_display = super().get_list_display(request)
+        list_display += ("language",)
+        return list_display
 
 
 class FileAdmin(admin.ModelAdmin):
@@ -172,7 +234,7 @@ class FileAdmin(admin.ModelAdmin):
 
 admin.site.register(File, FileAdmin)
 admin.site.register(Stream, StreamAdmin)
-admin.site.register(Video)
-admin.site.register(Audio)
-admin.site.register(Subtitle)
-admin.site.register(Container)
+admin.site.register(Video, VideoAdmin)
+admin.site.register(Audio, AudioAdmin)
+admin.site.register(Subtitle, SubtitleAdmin)
+admin.site.register(Container, ContainerAdmin)

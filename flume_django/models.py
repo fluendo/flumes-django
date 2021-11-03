@@ -44,7 +44,25 @@ class Stream(models.Model):
     media_type = models.CharField(max_length=128)
     type = models.CharField(max_length=32, choices=StreamType.choices)
     # Common fields for a single table inheritance
-
+    bitrate = models.IntegerField()
+    max_bitrate = models.IntegerField()
+    depth = models.IntegerField()
+    language = models.CharField(max_length=256)
+    # Video fields
+    framerate_denom = models.IntegerField()
+    framerate_num = models.IntegerField()
+    height = models.IntegerField()
+    par_denom = models.IntegerField()
+    par_num = models.IntegerField()
+    width = models.IntegerField()
+    is_image = models.BooleanField()
+    is_interlaced = models.BooleanField()
+    # Audio fields
+    channel_mask = models.IntegerField()
+    channels = models.IntegerField()
+    sample_rate = models.IntegerField()
+    # Subtitle fields
+    # Container fields
     class Meta:
         db_table = "streams"
         managed = False
