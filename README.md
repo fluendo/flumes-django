@@ -31,6 +31,8 @@ The project has a `demo` folder, in order to run locally, make sure you have a `
 ```shell
 poetry run python manage.py runserver
 ```
+After entering into the admin site, you will see something like this:
+![Admin Video](demo/admin-video.png)
 
 ## Development
 The project is based in `poetry` dependency management and packaging system. The basic steps are
