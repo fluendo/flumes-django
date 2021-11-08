@@ -1,17 +1,14 @@
 from django.apps import AppConfig
-from flume.config import Config, ConfigError
+from django.conf import settings
+from django.core.exceptions import ImproperlyConfigured
 
 
 class FlumeDjangoAppConfig(AppConfig):
     name = "flume_django"
 
     def ready(self):
-        try:
-            config = Config()
-        except ConfigError:
-            print("No configuration, checking settings")
-        # Get the flume configuration
-        # Create a new live database
-        # Install the router if needed
-        print("Check the flume database")
-        print("Check the flume router")
+        # Checking settings
+        if "flume" not in settings.DATABASES:
+            raise ImproperlyConfigured("Missing 'flume' database")
+        if "flume_django.router.Router" not in settings.DATABASE_ROUTERS:
+            raise ImproperlyConfigured("Missing 'flume_django.router.Router' router")
