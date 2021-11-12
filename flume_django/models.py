@@ -3,6 +3,16 @@ from django.db import models
 from flume_django.managers import StreamManager
 
 
+class Meta(models.Model):
+    id = models.AutoField(primary_key=True)
+    version = models.CharField(max_length=64)
+    root = models.CharField(max_length=1024)
+
+    class Meta:
+        db_table = "metas"
+        managed = False
+
+
 class File(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=512)

@@ -152,7 +152,7 @@ SQLAlchemy = "^1.4.26"
 type = "git"
 url = "https://github.com/turran/flume.git"
 reference = "master"
-resolved_reference = "03dc6e5e112350bfeb22993b47a4783f506947fe"
+resolved_reference = "5e97579e934a53a796f75d7dde2de1c92ea72f5a"
 
 [[package]]
 name = "greenlet"

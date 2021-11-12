@@ -6,7 +6,6 @@ from django.template.loader import render_to_string
 from django.template.response import TemplateResponse
 from django.urls import path, reverse
 
-from flume_django.config import Config
 from flume_django.forms import UploadFileForm
 from flume_django.models import (
     Audio,
@@ -14,10 +13,21 @@ from flume_django.models import (
     Field,
     File,
     Info,
+    Meta,
     Stream,
     Subtitle,
     Video,
 )
+
+
+class MetaAdmin(admin.ModelAdmin):
+    list_display = ("id", "version", "root")
+
+    def has_change_permission(self, request, obj=None):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
 
 
 class InfoInlineAdmin(admin.StackedInline):
@@ -208,10 +218,10 @@ class FileAdmin(admin.ModelAdmin):
         if request.method == "POST":
             form = UploadFileForm(request.POST, request.FILES)
             if form.is_valid():
+                meta = Meta.objects.all()[0]
                 # Upload the file to the Flume storage
-                config = Config()
                 f = request.FILES["file"]
-                name = os.path.join(config.get_media_files_directory(), f.name)
+                name = os.path.join(meta.root, f.name)
                 with open(name, "wb+") as destination:
                     for chunk in f.chunks():
                         destination.write(chunk)
@@ -232,6 +242,7 @@ class FileAdmin(admin.ModelAdmin):
             )
 
 
+admin.site.register(Meta, MetaAdmin)
 admin.site.register(File, FileAdmin)
 admin.site.register(Stream, StreamAdmin)
 admin.site.register(Video, VideoAdmin)
