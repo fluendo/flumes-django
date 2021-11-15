@@ -61,7 +61,6 @@ Install your development pre-commit hooks
 poetry run pre-commit install
 ```
 
-## License
 ## References
 * [Flume](https://github.com/turran/flume)
 * [Poetry Template](https://github.com/yunojuno/poetry-template)
