@@ -38,7 +38,7 @@ DATABASE_ROUTERS = ["flume_django.router.Router"]
 The project has a `demo` folder, in order to run locally, make sure you have a `flume` configuration in `$HOME/.flume` or `/etc/flume` and simply run
 
 ```shell
-poetry run python manage.py runserver
+poetry run python manage_demo.py runserver
 ```
 After entering into the admin site, you will see something like this:
 ![Admin Video](demo/admin-video.png)
