@@ -20,6 +20,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Install system dependencies
+      run: sudo apt-get install -y libgirepository1.0-dev libgstreamer-plugins-base1.0-dev
+
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
       with:
