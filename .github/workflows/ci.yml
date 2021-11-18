@@ -30,5 +30,9 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install poetry
 
+    - name: Install Tox
+      run: |
+        python -m pip install tox
+
     - name: Tox tests
       run: poetry run tox
