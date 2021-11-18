@@ -12,6 +12,6 @@ class Router(object):
         return None
 
     def allow_migrate(self, db, app_label, model_name=None, **hints):
-        if model._meta.app_label == "flume_django":
+        if app_label == "flume_django":
             return False
         return None
