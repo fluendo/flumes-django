@@ -40,11 +40,16 @@ class Info(models.Model):
 
 
 class Stream(models.Model):
-    class StreamType(models.TextChoices):
-        VIDEO = "video", "Video"
-        AUDIO = "audio", "Audio"
-        SUBTITLE = "subtitle", "Subtitle"
-        CONTAINER = "container", "Container"
+    VIDEO = "video"
+    AUDIO = "audio"
+    SUBTITLE = "subtitle"
+    CONTAINER = "container"
+    STREAM_TYPE_CHOICES = (
+        (VIDEO, "Video"),
+        (AUDIO, "Audio"),
+        (SUBTITLE, "Subtitle"),
+        (CONTAINER, "Container"),
+    )
 
     id = models.AutoField(primary_key=True)
     info = models.ForeignKey(Info, on_delete=models.CASCADE)
@@ -52,7 +57,7 @@ class Stream(models.Model):
         "self", related_name="children", on_delete=models.CASCADE
     )
     media_type = models.CharField(max_length=128)
-    type = models.CharField(max_length=32, choices=StreamType.choices)
+    type = models.CharField(max_length=32, choices=STREAM_TYPE_CHOICES)
     # Common fields for a single table inheritance
     bitrate = models.IntegerField()
     max_bitrate = models.IntegerField()
