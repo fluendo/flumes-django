@@ -1,41 +1,46 @@
-# flume-django
-`Django` application to manage the `flume` database
+# flumes-django
+`Django` application to manage the `flumes` database
 
 ## Features
-* Seamless integration between `Django` and `flume`
+* Seamless integration between `Django` and `flumes`
 * Possiblity to upload files directly through the admin interface
 
 ## Setup
-In order to integrate `flume-django` into your `Django` application, you need to:
+In order to integrate `flumes-django` into your `Django` application, you need to:
 
-Add `flume-django` as an installed application in your `settings.py`
+Add `flumes-django` as an installed application in your `settings.py`
 ```python
 INSTALLED_APPS = (
     ...,
-    "flume_django",
+    "flumes_django",
 )
 ```
 
-Add the `flume` database to your `settings.py`, you can do it manually or use the `flume_django.config.FlumeDjangoConfig` helper
+Add the `flumes` database to your `settings.py`, you can do it manually or use the `flume_django.config.FlumesDjangoConfig` helper
 
 ```python
-from flume_django.config import FlumeDjangoConfig
-config = FlumeDjangoConfig()
+from flumes_django.config import FlumesDjangoConfig
+config = FlumesDjangoConfig()
 DATABASES = {
-    "flume": {
+    "flumes": {
         "ENGINE": config.get_django_database_engine(),
         "NAME": config.get_database_database(),
     },
 }
 ```
 
-Add the `flume-django` router in your `settings.py`
+Add the `flumes-django` router in your `settings.py`
 ```python
 DATABASE_ROUTERS = ["flume_django.router.Router"]
 ```
 
+In case the discovery of the files happens in another machine, you can override the path where the files are stored by setting
+```python
+FLUMES_DJANGO_ROOT = "/your/own/local/path"
+```
+
 ## Demo
-The project has a `demo` folder, in order to run locally, make sure you have a `flume` configuration in `$HOME/.flume` or `/etc/flume` and simply run
+The project has a `demo` folder, in order to run locally, make sure you have a `flumes` configuration in `$HOME/.flumes` or `/etc/flumes` and simply run
 
 ```shell
 poetry run python manage_demo.py runserver
@@ -62,5 +67,5 @@ poetry run pre-commit install
 ```
 
 ## References
-* [Flume](https://github.com/turran/flume)
+* [Flumes](https://github.com/turran/flumes)
 * [Poetry Template](https://github.com/yunojuno/poetry-template)
