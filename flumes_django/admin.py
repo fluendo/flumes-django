@@ -1,5 +1,6 @@
 import os
 
+from django.conf import settings
 from django.contrib import admin
 from django.http import HttpResponseRedirect
 from django.template.loader import render_to_string
@@ -209,9 +210,10 @@ class FileAdmin(admin.ModelAdmin):
             form = UploadFileForm(request.POST, request.FILES)
             if form.is_valid():
                 meta = Meta.objects.all()[0]
+                root = getattr(settings, "FLUMES_DJANGO_ROOT", meta.root)
                 # Upload the file to the Flume storage
                 f = request.FILES["file"]
-                name = os.path.join(meta.root, f.name)
+                name = os.path.join(root, f.name)
                 with open(name, "wb+") as destination:
                     for chunk in f.chunks():
                         destination.write(chunk)
