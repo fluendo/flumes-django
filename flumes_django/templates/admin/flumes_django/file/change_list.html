@@ -5,7 +5,7 @@
   {{ block.super }}
   {% if has_add_permission %}                                                                            
   <li>
-    {% url 'admin:flume_django_file_upload' as upload_url %}
+    {% url 'admin:flumes_django_file_upload' as upload_url %}
     <a href="{% add_preserved_filters upload_url is_popup to_field %}" class="addlink">                     
       {% blocktranslate with cl.opts.verbose_name as name %}Upload {{ name }}{% endblocktranslate %}        
     </a>

@@ -237,24 +237,17 @@ docs = ["furo (>=2021.8.17b43)", "sphinx (>=4.1)", "sphinx-autodoc-typehints (>=
 testing = ["covdefaults (>=1.2.0)", "coverage (>=4)", "pytest (>=4)", "pytest-cov", "pytest-timeout (>=1.4.2)"]
 
 [[package]]
-name = "flume"
+name = "flumes"
 version = "0.1.3"
 description = ""
 category = "main"
 optional = false
-python-versions = "^3.9"
-develop = false
+python-versions = ">=3.9,<4.0"
 
 [package.dependencies]
-PyGObject = "^3.42.0"
-python-dateutil = "^2.8.2"
-SQLAlchemy = "^1.4.26"
-
-[package.source]
-type = "git"
-url = "https://github.com/turran/flume.git"
-reference = "master"
-resolved_reference = "7b6b9d960992e5633669e412db8b374c68463e4a"
+PyGObject = ">=3.42.0,<4.0.0"
+python-dateutil = ">=2.8.2,<3.0.0"
+SQLAlchemy = ">=1.4.26,<2.0.0"
 
 [[package]]
 name = "greenlet"
@@ -877,7 +870,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "ccdde815035af207f7944b40edc44b9c1df0a9c90d9feb840d00a3e3a45f8bc2"
+content-hash = "81ba09f81c82329c349c9502e199ac0ca3bd6e7936e105bca8455ed778982ab6"
 
 [metadata.files]
 asgiref = [
@@ -1022,7 +1015,10 @@ filelock = [
     {file = "filelock-3.4.0-py3-none-any.whl", hash = "sha256:2e139a228bcf56dd8b2274a65174d005c4a6b68540ee0bdbb92c76f43f29f7e8"},
     {file = "filelock-3.4.0.tar.gz", hash = "sha256:93d512b32a23baf4cac44ffd72ccf70732aeff7b8050fcaf6d3ec406d954baf4"},
 ]
-flume = []
+flumes = [
+    {file = "flumes-0.1.3-py3-none-any.whl", hash = "sha256:0270d961a0bd048333b1ca8d78d350943c739a69bdb5950dba165d0b45df5dbb"},
+    {file = "flumes-0.1.3.tar.gz", hash = "sha256:288f484de5760ccad382c4dac94dfdbe26545ac6dc662a63cd29c701805ff8b8"},
+]
 greenlet = [
     {file = "greenlet-1.1.2-cp27-cp27m-macosx_10_14_x86_64.whl", hash = "sha256:58df5c2a0e293bf665a51f8a100d3e9956febfbf1d9aaf8c0677cf70218910c6"},
     {file = "greenlet-1.1.2-cp27-cp27m-manylinux1_x86_64.whl", hash = "sha256:aec52725173bd3a7b56fe91bc56eccb26fbdff1386ef123abb63c84c5b43b63a"},

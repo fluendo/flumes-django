@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "flume-django"
+name = "flumes-django"
 version = "0.1.0"
 description = ""
 authors = ["Jorge Zapata <jorgeluis.zapata@gmail.com>"]
@@ -7,7 +7,7 @@ authors = ["Jorge Zapata <jorgeluis.zapata@gmail.com>"]
 [tool.poetry.dependencies]
 python = "^3.9"
 Django = "^2.2 || ^3.0"
-flume = {git = "https://github.com/turran/flume.git"}
+flumes = "^0.1.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

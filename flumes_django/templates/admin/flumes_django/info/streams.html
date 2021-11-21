@@ -2,7 +2,7 @@
 <div class="topology">
   <ul>
     {% for child in children %}
-    <li><a href="{% url 'admin:flume_django_stream_change' child.id %}">{{ child.type }} : {{ child.media_type }}</a></li>
+    <li><a href="{% url 'admin:flumes_django_stream_change' child.id %}">{{ child.type }} : {{ child.media_type }}</a></li>
       {% if child.children.count > 0 %}
       {% children_tag child %}
       {% endif %}

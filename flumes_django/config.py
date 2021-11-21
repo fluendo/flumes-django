@@ -1,7 +1,7 @@
-from flume.config import Config
+from flumes.config import Config
 
 
-class FlumeDjangoConfig(Config):
+class FlumesDjangoConfig(Config):
     def get_django_database_engine(self):
         driver = self.get_database_driver()
         if "postgresql" in driver:

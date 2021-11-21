@@ -6,18 +6,8 @@ from django.template.loader import render_to_string
 from django.template.response import TemplateResponse
 from django.urls import path, reverse
 
-from flume_django.forms import UploadFileForm
-from flume_django.models import (
-    Audio,
-    Container,
-    Field,
-    File,
-    Info,
-    Meta,
-    Stream,
-    Subtitle,
-    Video,
-)
+from .forms import UploadFileForm
+from .models import Audio, Container, Field, File, Info, Meta, Stream, Subtitle, Video
 
 
 class MetaAdmin(admin.ModelAdmin):
@@ -65,14 +55,14 @@ class InfoInlineAdmin(admin.StackedInline):
     def streams(self, obj):
         children = Stream.objects.filter(info=obj, parent=None)
         content = render_to_string(
-            "admin/flume_django/info/streams.html", {"children": children}
+            "admin/flumes_django/info/streams.html", {"children": children}
         )
         return content
 
     streams.allow_tags = True
 
     class Media:
-        css = {"all": ("admin/flume_django/common/topology.css",)}
+        css = {"all": ("admin/flumes_django/common/topology.css",)}
 
 
 class FieldInlineAdmin(admin.TabularInline):
@@ -127,14 +117,14 @@ class StreamAdmin(admin.ModelAdmin):
 
     def children(self, obj):
         content = render_to_string(
-            "admin/flume_django/stream/children.html", {"root": obj}
+            "admin/flumes_django/stream/children.html", {"root": obj}
         )
         return content
 
     children.allow_tags = True
 
     class Media:
-        css = {"all": ("admin/flume_django/common/topology.css",)}
+        css = {"all": ("admin/flumes_django/common/topology.css",)}
 
 
 class ContainerAdmin(StreamAdmin):
@@ -209,7 +199,7 @@ class FileAdmin(admin.ModelAdmin):
             path(
                 "upload/",
                 self.admin_site.admin_view(self.upload),
-                name="flume_django_file_upload",
+                name="flumes_django_file_upload",
             ),
         ]
         return urls + base_urls
@@ -226,7 +216,7 @@ class FileAdmin(admin.ModelAdmin):
                     for chunk in f.chunks():
                         destination.write(chunk)
                 return HttpResponseRedirect(
-                    reverse("admin:flume_django_file_changelist")
+                    reverse("admin:flumes_django_file_changelist")
                 )
         else:
             form = UploadFileForm()
@@ -238,7 +228,7 @@ class FileAdmin(admin.ModelAdmin):
                 "form": form,
             }
             return TemplateResponse(
-                request, "admin/flume_django/file/upload.html", context
+                request, "admin/flumes_django/file/upload.html", context
             )
 
 

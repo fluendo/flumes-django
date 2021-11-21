@@ -3,9 +3,9 @@ from os import path
 
 import django
 
-from flume_django.config import FlumeDjangoConfig
+from flumes_django.config import FlumesDjangoConfig
 
-config = FlumeDjangoConfig()
+config = FlumesDjangoConfig()
 
 DJANGO_VERSION = StrictVersion(django.get_version())
 
@@ -16,13 +16,13 @@ USE_L10N = True
 
 DATABASES = {
     "default": {"ENGINE": "django.db.backends.sqlite3", "NAME": "demo.db"},
-    "flume": {
+    "flumes": {
         "ENGINE": config.get_django_database_engine(),
         "NAME": config.get_database_database(),
     },
 }
 
-DATABASE_ROUTERS = ["flume_django.router.Router"]
+DATABASE_ROUTERS = ["flumes_django.router.Router"]
 
 
 INSTALLED_APPS = (
@@ -32,7 +32,7 @@ INSTALLED_APPS = (
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "flume_django",
+    "flumes_django",
 )
 
 MIDDLEWARE = [

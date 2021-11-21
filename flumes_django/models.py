@@ -1,6 +1,6 @@
 from django.db import models
 
-from flume_django.managers import StreamManager
+from .managers import StreamManager
 
 
 class Meta(models.Model):

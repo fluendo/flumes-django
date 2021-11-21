@@ -1,4 +1,4 @@
-from flume_django import __version__
+from flumes_django import __version__
 
 
 def test_version():

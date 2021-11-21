@@ -12,13 +12,13 @@ USE_L10N = True
 
 DATABASES = {
     "default": {"ENGINE": "django.db.backends.sqlite3", "NAME": "test.db"},
-    "flume": {
+    "flumes": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": "flume_test.db",
+        "NAME": "flumes_test.db",
     },
 }
 
-DATABASE_ROUTERS = ["flume_django.router.Router"]
+DATABASE_ROUTERS = ["flumes_django.router.Router"]
 
 
 INSTALLED_APPS = (
@@ -28,7 +28,7 @@ INSTALLED_APPS = (
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "flume_django",
+    "flumes_django",
 )
 
 MIDDLEWARE = [
